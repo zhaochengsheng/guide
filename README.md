@@ -1,19 +1,17 @@
 prototype
 =========
 
-1) Clone
+1) Fork the repository in Github
+
+2) Clone
 
 ```bash
-cd ~/location/workspace
-git clone https://github.com/escrichov/prototype.git
-cd prototype
+git clone https://github.com/your username/guide.git
+cd guide
 git remote add shared https://github.com/escrichov/prototype.git
 ```
 
-2) Create android project with eclipse
-
+3) Create android project with eclipse
 
 New -> Other -> Android Project from Existing Code
-Browse prototype folder 
-
-3) Add Libraries
+Browse guide folder 
