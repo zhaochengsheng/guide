@@ -12,8 +12,8 @@
 *.class
 
 # generated files
-Prototype/bin/
-Prototype/gen/
+Guide/bin/
+Guide/gen/
 
 # Ignore gradle files
 .gradle/
