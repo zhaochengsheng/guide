@@ -1,4 +1,4 @@
-prototype
+Guide
 =========
 
 1) Fork the repository in Github
