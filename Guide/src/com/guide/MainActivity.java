@@ -41,7 +41,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 public class MainActivity extends FragmentActivity implements GooglePlayServicesClient.ConnectionCallbacks, 
 	GooglePlayServicesClient.OnConnectionFailedListener, LocationListener{
 	
-	//drawer
+	//Navigation Drawer
     private ActionBarDrawerToggle mDrawerToggle;
 	private String[] menu;
     private DrawerLayout mDrawerLayout;
@@ -49,6 +49,7 @@ public class MainActivity extends FragmentActivity implements GooglePlayServices
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
 
+    // Google Maps
 	LocationRequest request;
 	LocationClient client;
 	Location currentLocation;
@@ -58,7 +59,6 @@ public class MainActivity extends FragmentActivity implements GooglePlayServices
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
 		
 		// Initialize drawer
 		mTitle = mDrawerTitle = getTitle();
@@ -101,7 +101,7 @@ public class MainActivity extends FragmentActivity implements GooglePlayServices
 
         // menu initialize over
         
-//        // initialize map
+//       // initialize map
 		map = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
 		
 		request = LocationRequest.create();
@@ -153,11 +153,15 @@ public class MainActivity extends FragmentActivity implements GooglePlayServices
 	    args.putInt(MenuItemFragment.ARG_MENU_ITEM_NUMBER, position);
 	    fragment.setArguments(args);
 
+	    if (position == 0){ //Crash.
+	    	
+	    } else {
 	    // Insert the fragment by replacing any existing fragment
 	    FragmentManager fragmentManager = getFragmentManager();
 	    // map = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
 	    fragmentManager.beginTransaction().replace(R.id.map, fragment).commit();
-
+	    }
+	    
 	    // Highlight the selected item, update the title, and close the drawer
 	    mDrawerList.setItemChecked(position, true);
 	    setTitle(menu[position]);
@@ -195,6 +199,9 @@ public class MainActivity extends FragmentActivity implements GooglePlayServices
         }
     }
 
+    
+    
+    // IMPLEMENTING GOOGLE MAPS AS FRAGMENT!?
 	@Override
 	public void onLocationChanged(Location location) {
 		//Toast.makeText(MainActivity.this, "Location changed", Toast.LENGTH_SHORT).show();

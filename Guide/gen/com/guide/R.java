@@ -1436,6 +1436,7 @@ containing a value of this type.
         public static final int drawer_close=0x7f07002b;
         public static final int drawer_open=0x7f07002a;
         public static final int hello_world=0x7f070029;
+        public static final int title_activity_google_maps_=0x7f07002c;
     }
     public static final class style {
         /** 
