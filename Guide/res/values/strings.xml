@@ -4,5 +4,13 @@
     <string name="app_name">Guide</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+    <string name="drawer_open">Open Menu</string>
+    <string name="drawer_close">Close Menu</string>
+    <string-array name="menu">
+        <item>Item 1</item>
+        <item>Item 2</item>
+        <item>Item 3</item>
+        <item>Item 4</item>
+    </string-array>
 
 </resources>
