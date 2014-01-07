@@ -26,6 +26,8 @@ public class MainActivity extends FragmentActivity{
     private ListView mDrawerList;
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
+    
+    
 
 	
 	@Override
