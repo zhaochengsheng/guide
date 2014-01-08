@@ -1,21 +1,20 @@
 package com.guide;
 
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.*;
-import com.google.android.gms.maps.LocationSource.OnLocationChangedListener;
 import com.google.android.gms.maps.model.LatLng;
-
-import android.content.Context;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.common.GooglePlayServicesClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,16 +24,15 @@ import android.widget.Toast;
 
 public class LaunchMapActivity extends Fragment implements
 		GooglePlayServicesClient.ConnectionCallbacks,
-		GooglePlayServicesClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
+		GooglePlayServicesClient.OnConnectionFailedListener, LocationListener {
 	/**
 	 * Note that this may be null if the Google Play services APK is not
 	 * available.
 	 */
-	private GoogleMap mMap;
-	LatLng latlng;
+	private static GoogleMap mMap;
 	private LocationRequest lr;
 	private LocationClient lc;
-	MapFragment mapFragment;
+	private MapFragment mapFragment;
 	// ImageView iv;
 	private static View view;
 
@@ -46,14 +44,12 @@ public class LaunchMapActivity extends Fragment implements
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		 lr = LocationRequest.create();
-         lr.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-         lc = new LocationClient(this.getActivity().getApplicationContext(),
-                 this, this);
-         lc.connect();
-		
-		// setUpMapIfNeeded();
-		// setContentView(R.layout.activity_launch_map);
+		lr = LocationRequest.create();
+		lr.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+		lc = new LocationClient(this.getActivity().getApplicationContext(),
+				this, this);
+		lc.connect();
+
 	}
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,21 +59,16 @@ public class LaunchMapActivity extends Fragment implements
 			ViewGroup parent = (ViewGroup) view.getParent();
 			if (parent != null)
 				parent.removeView(view);
-		}
+		} try {
 
-		try {
 			view = inflater.inflate(R.layout.activity_launch_map, container,
 					false);
-
 			mapFragment = ((MapFragment) this.getActivity()
 					.getFragmentManager().findFragmentById(R.id.map));
-			//iv = (ImageView) view.findViewById(R.id.iv);
-
+			// iv = (ImageView) view.findViewById(R.id.iv);
 			mMap = mapFragment.getMap();
-			mMap.getUiSettings().setAllGesturesEnabled(false);
-			mMap.getUiSettings().setMyLocationButtonEnabled(false);
-			mMap.setMyLocationEnabled(true);
-			mMap.getUiSettings().setZoomControlsEnabled(false);
+			// Change here what the map should
+			setUpMap();
 
 			MapsInitializer.initialize(this.getActivity());
 		} catch (GooglePlayServicesNotAvailableException e) {
@@ -91,9 +82,8 @@ public class LaunchMapActivity extends Fragment implements
 					Toast.LENGTH_LONG).show();
 		}
 
-
 		// setup the map
-		setUpMapIfNeeded();
+		// setUpMapIfNeeded();
 		return view;
 	}
 
@@ -107,64 +97,58 @@ public class LaunchMapActivity extends Fragment implements
 		super.onResume();
 	}
 
-	private void setUpMapIfNeeded() {
-		// Do a null check to confirm that we have not already instantiated the
-		// map.
-		if (mMap == null) {
-			// Try to obtain the map from the SupportMapFragment.
-			mMap = ((SupportMapFragment) getFragmentManager().findFragmentById(
-					R.id.map)).getMap();
-			// Check if we were successful in obtaining the map.
-			if (mMap != null) {
-				setUpMap();
-			}
-		}
-	}
-
 	// setUpMap() sets up a map
 	private void setUpMap() {
+
 		mMap.setMyLocationEnabled(true);
 	}
+	
+	// this function performs change on the map
+	public static void alterMap(int option){
+		mMap.clear();
+		// if Allgemein Show all
+		if (option == 0){
+			mMap.addMarker(new MarkerOptions()
 
-	// destroy the map if fragment is changed
-	private void deleteOldMap() {
-		SupportMapFragment mapFragment = ((SupportMapFragment) getFragmentManager()
-				.findFragmentById(R.id.map));
-		if (mapFragment != null) {
-			FragmentManager fM = getFragmentManager();
-			fM.beginTransaction().remove(mapFragment).commit();
+	        .position(new LatLng(40, 10))
+	        .title("Hello world"));
+		} else if (option == 1) {
+			mMap.addMarker(new MarkerOptions()
+	        .position(new LatLng(39, 0))
+	        .title("Dito!"));
+		} else {
+			
 		}
-
 	}
 
-	// destroy this view
+// destroy this view -- never destroy this!! :O
 	public void onDestroyView() {
 		super.onDestroyView();
-		deleteOldMap();
+		// This removes the map properly so it can be reinitialized.
+		getActivity().getFragmentManager().beginTransaction().remove(mapFragment).commit();
 	}
 
 	public void onLocationChanged(Location l2) {
 		CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(
-                new LatLng(l2.getLatitude(), l2.getLongitude()), 15);
-        mMap.animateCamera(cameraUpdate);
+				new LatLng(l2.getLatitude(), l2.getLongitude()), 15);
+		mMap.animateCamera(cameraUpdate);
 	}
-	
-    @Override
-    public void onConnectionFailed(ConnectionResult arg0) {
 
-    }
+	@Override
+	public void onConnectionFailed(ConnectionResult arg0) {
 
-    @Override
-    public void onConnected(Bundle connectionHint) {
-        lc.requestLocationUpdates(lr, this);
+	}
 
-    }
+	@Override
+	public void onConnected(Bundle connectionHint) {
+		lc.requestLocationUpdates(lr, this);
 
-    @Override
-    public void onDisconnected() {
+	}
 
-    }
+	@Override
+	public void onDisconnected() {
 
+	}
 
 
 }

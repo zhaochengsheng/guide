@@ -1,23 +1,20 @@
 package com.guide;
 
 import android.os.Bundle;
-import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.content.res.Configuration;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 
-public class MainActivity extends FragmentActivity{
+public class MainActivity extends FragmentActivity {
 	
 	//drawer
     private ActionBarDrawerToggle mDrawerToggle;
@@ -27,7 +24,11 @@ public class MainActivity extends FragmentActivity{
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
     
+    private Fragment mapfragment;
+    private Fragment settingsFragment;
     
+    
+    FragmentManager fragmentManager = getSupportFragmentManager();
 
 	
 	@Override
@@ -81,7 +82,7 @@ public class MainActivity extends FragmentActivity{
          * 
          */
         
-        selectItem(0);
+        startMapActivity();
 		
 	}
 	
@@ -119,27 +120,17 @@ public class MainActivity extends FragmentActivity{
 
 	/** Swaps fragments in the main content view */
 	private void selectItem(int position) {
-		// Depending on which item is pressed, perform different Activities
-		if (position == 0){
-			// Create a new mapfragment and specify what to show:
-			// mapfragment can be overloaded
-			Fragment mapfragment = new LaunchMapActivity();
-		    // Insert the fragment by rep
-			// Replace current view view (fragment_container)
-		    mapfragment.getFragmentManager();
-		    FragmentManager fragmentManager = getSupportFragmentManager();
-		    fragmentManager.beginTransaction().replace(R.id.fragment_container, mapfragment).commit();
-		} else {
-		    Fragment fragment = new MenuItemFragment();
-		    Bundle args = new Bundle();
-		    args.putInt(MenuItemFragment.ARG_MENU_ITEM_NUMBER, position);
-		    fragment.setArguments(args);
-		    // Insert the fragment by replacing any existing fragment
-		    FragmentManager fragmentManager = getSupportFragmentManager();
-		    //fragment_container is the one to be replaced with sth
-		    fragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit();
-		}
-	    
+		
+			// Depending on which item is pressed, perform different Activities on current fragment
+			if (position == 0){
+				LaunchMapActivity.alterMap(position);
+			} else if (position == 1){
+				LaunchMapActivity.alterMap(position);
+			// Create View for SettingsMenu or Other
+			} else if (position == 3){
+				startSettingsActivity();
+			}	    
+
 	    // Highlight the selected item, update the title, and close the drawer
 	    mDrawerList.setItemChecked(position, true);
 	    setTitle(menu[position]);
@@ -152,27 +143,22 @@ public class MainActivity extends FragmentActivity{
 	    getActionBar().setTitle(mTitle);
 	}
 	
-	/**
-     * Fragment that appears in the "content_frame"
-     * just exists for testing porpuses and creats the content
-     * which is currently empty of item: 2,3,4
-     * 
-     */
-    public static class MenuItemFragment extends Fragment {
-        public static final String ARG_MENU_ITEM_NUMBER = "menu_number";
-
-        public MenuItemFragment() {
-            // Empty constructor required for fragment subclasses
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-	            View rootView = inflater.inflate(R.layout.fragment_menu_item, container, false);
-	            int i = getArguments().getInt(ARG_MENU_ITEM_NUMBER);
-	            String menu = getResources().getStringArray(R.array.menu)[i];
-	            getActivity().setTitle(menu);
-         return rootView;
-        }
-    }
+	
+	// maybe change this so it's not a fragment...
+	public void startSettingsActivity(){
+	    settingsFragment = new LaunchSettingsActivity();
+	    settingsFragment.getFragmentManager();
+	    //fragment_container is the one to be replaced with
+	    fragmentManager.beginTransaction().replace(R.id.fragment_container, settingsFragment).commit();
+	}
+	
+	public void startMapActivity(){
+		// Create a new mapfragment and specify what to show:
+		mapfragment = new LaunchMapActivity();
+		// Insert the fragment by rep
+		// Replace current view view (fragment_container)
+		mapfragment.getFragmentManager();
+		fragmentManager.beginTransaction().replace(R.id.fragment_container, mapfragment).commit();
+	}
+	
 }

@@ -1181,7 +1181,7 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f060019;
         public static final int action_menu_presenter=0x7f06001a;
         public static final int action_mode_close_button=0x7f060027;
-        public static final int action_settings=0x7f060043;
+        public static final int action_settings=0x7f060045;
         public static final int activity_chooser_view_content=0x7f060028;
         public static final int always=0x7f06000f;
         public static final int beginning=0x7f060014;
@@ -1190,20 +1190,20 @@ containing a value of this type.
         public static final int default_activity_button=0x7f06002b;
         public static final int dialog=0x7f060012;
         public static final int disableHome=0x7f06000c;
-        public static final int drawer_layout=0x7f060040;
+        public static final int drawer_layout=0x7f060041;
         public static final int dropdown=0x7f060013;
         public static final int edit_query=0x7f060033;
         public static final int end=0x7f060016;
         public static final int expand_activities_button=0x7f060029;
         public static final int expanded_menu=0x7f06002f;
-        public static final int fragment_container=0x7f060041;
+        public static final int fragment_container=0x7f060042;
         public static final int home=0x7f060017;
         public static final int homeAsUp=0x7f060009;
         public static final int hybrid=0x7f060004;
         public static final int icon=0x7f06002d;
         public static final int ifRoom=0x7f06000e;
         public static final int image=0x7f06002a;
-        public static final int left_drawer=0x7f060042;
+        public static final int left_drawer=0x7f060043;
         public static final int listMode=0x7f060005;
         public static final int list_item=0x7f06002c;
         public static final int map=0x7f06003f;
@@ -1225,6 +1225,7 @@ containing a value of this type.
         public static final int search_plate=0x7f060039;
         public static final int search_src_text=0x7f06003a;
         public static final int search_voice_btn=0x7f06003e;
+        public static final int settings=0x7f060040;
         public static final int shortcut=0x7f060031;
         public static final int showCustom=0x7f06000b;
         public static final int showHome=0x7f060008;
@@ -1233,6 +1234,7 @@ containing a value of this type.
         public static final int submit_area=0x7f06003c;
         public static final int tabMode=0x7f060006;
         public static final int terrain=0x7f060003;
+        public static final int text1=0x7f060044;
         public static final int title=0x7f06002e;
         public static final int top_action_bar=0x7f060023;
         public static final int up=0x7f060024;
@@ -1290,14 +1292,15 @@ containing a value of this type.
         public static final int abc_search_dropdown_item_icons_2line=0x7f030015;
         public static final int abc_search_view=0x7f030016;
         public static final int activity_launch_map=0x7f030017;
-        public static final int activity_main=0x7f030018;
-        public static final int drawer_list_item=0x7f030019;
-        public static final int fragment_menu_item=0x7f03001a;
+        public static final int activity_launch_settings=0x7f030018;
+        public static final int activity_main=0x7f030019;
+        public static final int drawer_list_item=0x7f03001a;
         public static final int support_simple_spinner_dropdown_item=0x7f03001b;
     }
     public static final class menu {
         public static final int launch_map=0x7f0d0000;
-        public static final int main=0x7f0d0001;
+        public static final int launch_settings=0x7f0d0001;
+        public static final int main=0x7f0d0002;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
@@ -1441,6 +1444,7 @@ containing a value of this type.
         public static final int hello_world=0x7f070029;
         public static final int title_activity_google_maps_=0x7f07002c;
         public static final int title_activity_launch_map=0x7f07002d;
+        public static final int title_activity_launch_settings=0x7f07002e;
     }
     public static final class style {
         /** 

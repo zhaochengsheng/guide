@@ -16,5 +16,6 @@
 
     <string name="title_activity_google_maps_">GoogleMaps_Activity</string>
     <string name="title_activity_launch_map">LaunchMapActivity</string>
+    <string name="title_activity_launch_settings">LaunchSettingsActivity</string>
 
 </resources>

@@ -49,6 +49,10 @@
             android:name="com.guide.LaunchMapActivity"
             android:label="@string/title_activity_launch_map" >
         </activity>
+        <activity
+            android:name="com.guide.LaunchSettingsActivity"
+            android:label="@string/title_activity_launch_settings" >
+        </activity>
     </application>
 
 </manifest>
