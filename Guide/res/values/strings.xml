@@ -8,12 +8,14 @@
     <string name="drawer_close">Close Menu</string>
 
     <string-array name="menu">
-        <item>Item 1</item>
+        <item>General</item>
         <item>Item 2</item>
-        <item>Item 3</item>
-        <item>Item 4</item>
+        <item>Nothing</item>
+        <item>Ajustes</item>
     </string-array>
 
     <string name="title_activity_google_maps_">GoogleMaps_Activity</string>
+    <string name="title_activity_launch_map">LaunchMapActivity</string>
+    <string name="title_activity_launch_settings">LaunchSettingsActivity</string>
 
 </resources>

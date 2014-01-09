@@ -45,6 +45,14 @@
             android:name="com.guide.GoogleMaps_Activity"
             android:label="@string/title_activity_google_maps_" >
         </activity>
+        <activity
+            android:name="com.guide.LaunchMapActivity"
+            android:label="@string/title_activity_launch_map" >
+        </activity>
+        <activity
+            android:name="com.guide.LaunchSettingsActivity"
+            android:label="@string/title_activity_launch_settings" >
+        </activity>
     </application>
 
 </manifest>
