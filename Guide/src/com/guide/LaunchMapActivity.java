@@ -99,17 +99,15 @@ public class LaunchMapActivity extends Fragment implements
 
 	// setUpMap() sets up a map
 	private void setUpMap() {
-
 		mMap.setMyLocationEnabled(true);
 	}
 	
 	// this function performs change on the map
 	public static void alterMap(int option){
 		mMap.clear();
-		// if Allgemein Show all
+		// if general show all
 		if (option == 0){
 			mMap.addMarker(new MarkerOptions()
-
 	        .position(new LatLng(40, 10))
 	        .title("Hello world"));
 		} else if (option == 1) {
@@ -121,11 +119,8 @@ public class LaunchMapActivity extends Fragment implements
 		}
 	}
 
-// destroy this view -- never destroy this!! :O
 	public void onDestroyView() {
 		super.onDestroyView();
-		// This removes the map properly so it can be reinitialized.
-		getActivity().getFragmentManager().beginTransaction().remove(mapFragment).commit();
 	}
 
 	public void onLocationChanged(Location l2) {

@@ -40,12 +40,6 @@ public class LaunchSettingsActivity extends Fragment {
     
 	public void onDestroyView() {
 		super.onDestroyView();
-		// This removes the map properly so it can be reinitialized.
-		try {
-		getFragmentManager().beginTransaction().remove(settingsFragment).commit();
-		} catch (InflateException e) {
-			Toast.makeText(getActivity(), "Problem on Destroy View !",
-					Toast.LENGTH_LONG).show();
-		}
+		
 	}
 }
