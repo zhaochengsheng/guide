@@ -78,8 +78,8 @@ public class MainActivity extends FragmentActivity {
 		 */
 		if (findViewById(R.id.fragment_container) != null) {
 			if (savedInstanceState != null) {
-                return;
-            }
+				return;
+			}
 			startMapActivity();
 			startSettingsActivity();
 		}
@@ -116,12 +116,12 @@ public class MainActivity extends FragmentActivity {
 		@Override
 		public void onItemClick(AdapterView parent, View view, int position,
 				long id) {
-			selectItem(position);
+			performAction(position);
 		}
 	}
 
 	/** Swaps fragments in the main content view */
-	private void selectItem(int position) {
+	private void performAction(int position) {
 
 		/*
 		 * Call on Fragment Change to make sure the right Fragment is shown.
@@ -150,23 +150,27 @@ public class MainActivity extends FragmentActivity {
 	}
 
 	/*
-	 *  Switch to SettingsFragment
+	 * Switch to SettingsFragment and Back
 	 */
-	public void onFragmentChange(String name) {	
-		if (name == "settings"){
-			FragmentTransaction transaction = fragmentManager.beginTransaction();
-			transaction.show(settingsFragment);
+	public void onFragmentChange(String name) {
+		if (name == "settings") {
+			if (settingsFragment.isHidden() == true) {
+			FragmentTransaction transaction = fragmentManager
+					.beginTransaction();
 			transaction.hide(mapfragment);
+			transaction.show(settingsFragment);
 			transaction.addToBackStack(null);
-			transaction.commit();	
-		} else if (name == "map"){
-			if(mapfragment.isHidden() == true){
-				FragmentTransaction transaction = fragmentManager.beginTransaction();
+			transaction.commit();
+			}
+		} else if (name == "map") {
+			if (mapfragment.isHidden() == true) {
+				FragmentTransaction transaction = fragmentManager
+						.beginTransaction();
 				transaction.hide(settingsFragment);
 				transaction.show(mapfragment);
 				transaction.addToBackStack(null);
-				transaction.commit();	
-			} 
+				transaction.commit();
+			}
 		}
 	}
 
@@ -179,7 +183,6 @@ public class MainActivity extends FragmentActivity {
 		FragmentTransaction transaction = fragmentManager.beginTransaction();
 		transaction.add(R.id.fragment_container, settingsFragment);
 		transaction.hide(settingsFragment);
-		//transaction.addToBackStack(null);
 		transaction.commit();
 	}
 

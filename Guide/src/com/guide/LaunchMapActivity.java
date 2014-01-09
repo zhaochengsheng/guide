@@ -75,7 +75,7 @@ public class LaunchMapActivity extends Fragment implements
 			Toast.makeText(getActivity(), "Google Play Services missing !",
 					Toast.LENGTH_LONG).show();
 		} catch (InflateException e) {
-			Toast.makeText(getActivity(), "Problems inflating the view !",
+			Toast.makeText(getActivity(), "Problems inflating the view for Maps!",
 					Toast.LENGTH_LONG).show();
 		} catch (NullPointerException e) {
 			Toast.makeText(getActivity(), "Google Play Services missing !",
@@ -125,7 +125,7 @@ public class LaunchMapActivity extends Fragment implements
 
 	public void onLocationChanged(Location l2) {
 		CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(
-				new LatLng(l2.getLatitude(), l2.getLongitude()), 15);
+				new LatLng(l2.getLatitude(), l2.getLongitude()),12);
 		mMap.animateCamera(cameraUpdate);
 	}
 
