@@ -32,3 +32,4 @@ proguard/*
 
 appcompat/bin/*
 google-play-services-lib/bin/*
+android-support-v4-preferencefragment-master/bin/*
