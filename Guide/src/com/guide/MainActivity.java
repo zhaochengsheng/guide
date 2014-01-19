@@ -127,13 +127,12 @@ public class MainActivity extends FragmentActivity {
 		 * Call on Fragment Change to make sure the right Fragment is shown.
 		 */
 		if (position == 0) {
-			onFragmentChange("map");
-			LaunchMapActivity.alterMap(position);
+			// TODO Call Menú principal Fragment
 		} else if (position == 1) {
 			onFragmentChange("map");
-			LaunchMapActivity.alterMap(position);
-			// Create View for SettingsMenu or Other
+			LaunchMapActivity.alterMap();
 		} else if (position == 3) {
+			// Create View for SettingsMenu or Other
 			onFragmentChange("settings");
 		}
 

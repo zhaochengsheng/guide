@@ -7,9 +7,12 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class PlacesSQLiteHelper extends SQLiteOpenHelper {
 
 	public static final String TABLE_PLACES = "places";
-	public static final String COLUMN_ID = "id";
+	public static final String COLUMN_ID = "local_id";
 	public static final String COLUMN_NAME = "name";
 	public static final String COLUMN_SCORE = "rating";
+	public static final String COLUMN_REMOTE_ID = "_id";
+	public static final String COLUMN_LATITUDE = "latitude";
+	public static final String COLUMN_LONGITUDE = "longitude";
 	
 	private static final String DATABASE_NAME = "places.db";
 	private static final int DATABASE_VERSION = 1;
@@ -17,7 +20,10 @@ public class PlacesSQLiteHelper extends SQLiteOpenHelper {
 	String sqlCreate = "CREATE TABLE " + TABLE_PLACES  + "(" +
 			COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
 			COLUMN_NAME + " TEXT NOT NULL, " +
-			COLUMN_SCORE + " FLOAT" +
+			COLUMN_SCORE + " FLOAT, " +
+			COLUMN_REMOTE_ID + " TEXT NOT NULL," +
+			COLUMN_LATITUDE + " FLOAT NOT NULL," +
+			COLUMN_LONGITUDE + " FLOAT NOT NULL" +
 			");";
 	
 	public PlacesSQLiteHelper(Context context){

@@ -8,9 +8,9 @@
     <string name="drawer_close">Close Menu</string>
 
     <string-array name="menu">
-        <item>General</item>
-        <item>Item 2</item>
-        <item>Nothing</item>
+        <item>Menú Principal</item>
+        <item>Mapa</item>
+        <item>Categorías</item>
         <item>Ajustes</item>
     </string-array>
 

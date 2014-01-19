@@ -5,6 +5,7 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.*;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.common.GooglePlayServicesClient;
@@ -12,9 +13,12 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.guide.db.GetPlacesTask;
+
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +39,10 @@ public class LaunchMapActivity extends Fragment implements
 	private MapFragment mapFragment;
 	// ImageView iv;
 	private static View view;
+	private int zoom = 16;
+	private static FragmentActivity activity;
+	private static Location mCurrentLocation;
+	private static Location locationShown;
 
 	public LaunchMapActivity() {
 		// this will be the constructur to overload some methods....
@@ -48,8 +56,22 @@ public class LaunchMapActivity extends Fragment implements
 		lr.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 		lc = new LocationClient(this.getActivity().getApplicationContext(),
 				this, this);
-		lc.connect();
+		activity = getActivity();
+	}
 
+	@Override
+	public void onStart() {
+		// TODO Auto-generated method stub
+		super.onStart();
+		
+		lc.connect();
+	}
+
+	@Override
+	public void onStop() {
+		// TODO Auto-generated method stub
+		lc.disconnect();
+		super.onStop();
 	}
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,7 +81,9 @@ public class LaunchMapActivity extends Fragment implements
 			ViewGroup parent = (ViewGroup) view.getParent();
 			if (parent != null)
 				parent.removeView(view);
-		} try {
+		}
+		
+		try {
 
 			view = inflater.inflate(R.layout.activity_launch_map, container,
 					false);
@@ -103,19 +127,17 @@ public class LaunchMapActivity extends Fragment implements
 	}
 	
 	// this function performs change on the map
-	public static void alterMap(int option){
-		mMap.clear();
+	public static void alterMap(){
 		// if general show all
-		if (option == 0){
-			mMap.addMarker(new MarkerOptions()
-	        .position(new LatLng(40, 10))
-	        .title("Hello world"));
-		} else if (option == 1) {
-			mMap.addMarker(new MarkerOptions()
-	        .position(new LatLng(39, 0))
-	        .title("Dito!"));
-		} else {
-			
+		if(mCurrentLocation != null && mCurrentLocation != locationShown){
+			mMap.clear();
+			locationShown = mCurrentLocation;
+			GetPlacesTask getPlacesTask = new GetPlacesTask(activity, mMap);
+		    String latitude = String.valueOf(mCurrentLocation.getLatitude());
+		    String longitude = String.valueOf(mCurrentLocation.getLongitude());
+		    String maxDistance = "400";
+		    String limit = "30";
+		    getPlacesTask.execute(longitude, latitude, maxDistance, limit);
 		}
 	}
 
@@ -124,9 +146,12 @@ public class LaunchMapActivity extends Fragment implements
 	}
 
 	public void onLocationChanged(Location l2) {
+		mCurrentLocation = l2;
+		
 		CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(
-				new LatLng(l2.getLatitude(), l2.getLongitude()),12);
+				new LatLng(l2.getLatitude(), l2.getLongitude()), zoom);
 		mMap.animateCamera(cameraUpdate);
+		alterMap();
 	}
 
 	@Override
@@ -137,7 +162,9 @@ public class LaunchMapActivity extends Fragment implements
 	@Override
 	public void onConnected(Bundle connectionHint) {
 		lc.requestLocationUpdates(lr, this);
-
+	    // Global variable to hold the current location
+	    mCurrentLocation = lc.getLastLocation();
+	    alterMap();
 	}
 
 	@Override
