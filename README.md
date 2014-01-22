@@ -8,7 +8,7 @@ Guide
 ```bash
 git clone https://github.com/your username/guide.git
 cd guide
-git remote add shared https://github.com/escrichov/prototype.git
+git remote add shared https://github.com/escrichov/guide.git
 ```
 
 3) Create android project with eclipse
