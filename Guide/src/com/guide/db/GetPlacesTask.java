@@ -59,28 +59,21 @@ public class GetPlacesTask extends AsyncTask<String, Integer, Boolean> {
 				float longitude = places.get(i).getLocation().getCoordinates().get(0);
 				float latitude = places.get(i).getLocation().getCoordinates().get(1);
 				
-				int marker = R.drawable.marker;
-				if (places.get(i).getCategory() == "restaurant"){
+				int marker = R.drawable.ic_flecharestaurante;
+				if (places.get(i).getCategory().equals("restaurant")){
 					marker = R.drawable.ic_flecharestaurante;
-					break;
-				}else if(places.get(i).getCategory() == "bar"){
+				}else if(places.get(i).getCategory().equals("bar")){
 					marker = R.drawable.ic_flecharestaurante;
-					break;
-				}else if(places.get(i).getCategory() == "pharmacy"){
+				}else if(places.get(i).getCategory().equals("pharmacy")){
 						marker = R.drawable.ic_flechafarmacia;
-						break;
-				}else if(places.get(i).getCategory() == "bank"){
+				}else if(places.get(i).getCategory().equals("bank")){
 						marker = R.drawable.ic_flechabanco;
-						break;
-				}else if(places.get(i).getCategory() == "grocery_or_supermarket"){
+				}else if(places.get(i).getCategory().equals("grocery_or_supermarket")){
 						marker = R.drawable.ic_flechasupermercado;
-						break;
-				}else if(places.get(i).getCategory() == "clothing_store"){
+				}else if(places.get(i).getCategory().equals("clothing_store")){
 						marker = R.drawable.ic_flecharopa;
-						break;
-				}else if(places.get(i).getCategory() == "movie_theater"){
+				}else if(places.get(i).getCategory().equals("movie_theater")){
 						marker = R.drawable.ic_flechacine;
-						break;
 				}
 				mMap.addMarker(new MarkerOptions()
 		        .position(new LatLng(latitude, longitude))
