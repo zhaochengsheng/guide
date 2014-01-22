@@ -217,7 +217,7 @@ public class MainActivity extends FragmentActivity {
 		mapfragment.getFragmentManager();
 		FragmentTransaction transaction = fragmentManager.beginTransaction();
 		transaction.replace(R.id.fragment_container_map, mapfragment);
-		transaction.hide(settingsFragment);
+		transaction.hide(mapfragment);
 		// if being added to the Backstack it will revert the fragment_container
 		// and the view is empty.
 		transaction.commit();

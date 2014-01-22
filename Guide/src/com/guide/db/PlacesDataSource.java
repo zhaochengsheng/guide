@@ -23,7 +23,9 @@ public class PlacesDataSource {
 			PlacesSQLiteHelper.COLUMN_SCORE,
 			PlacesSQLiteHelper.COLUMN_REMOTE_ID,
 			PlacesSQLiteHelper.COLUMN_LATITUDE,
-			PlacesSQLiteHelper.COLUMN_LONGITUDE
+			PlacesSQLiteHelper.COLUMN_LONGITUDE,
+			PlacesSQLiteHelper.COLUMN_DESCRIPTION,
+			PlacesSQLiteHelper.COLUMN_CATEGORY
 	};
 	
 	public PlacesDataSource(Context context){
@@ -38,13 +40,15 @@ public class PlacesDataSource {
 		dbHelper.close();
 	}
 	
-	public Place createPlace(String name, float rating, String remote_id, float latitude, float longitude){
+	public Place createPlace(String name, float rating, String remote_id, float latitude, float longitude, String description, String category){
 		ContentValues values = new ContentValues();
 		values.put(PlacesSQLiteHelper.COLUMN_NAME, name);
 		values.put(PlacesSQLiteHelper.COLUMN_SCORE, rating);
 		values.put(PlacesSQLiteHelper.COLUMN_REMOTE_ID, remote_id);
-		values.put(PlacesSQLiteHelper.COLUMN_LATITUDE, remote_id);
-		values.put(PlacesSQLiteHelper.COLUMN_LONGITUDE, remote_id);
+		values.put(PlacesSQLiteHelper.COLUMN_LATITUDE, latitude);
+		values.put(PlacesSQLiteHelper.COLUMN_LONGITUDE, longitude);
+		values.put(PlacesSQLiteHelper.COLUMN_LONGITUDE, description);
+		values.put(PlacesSQLiteHelper.COLUMN_LONGITUDE, category);
 		
 		long insertId = database.insert(
 				PlacesSQLiteHelper.TABLE_PLACES, 
@@ -58,6 +62,27 @@ public class PlacesDataSource {
 		Place scoreObject = cursorToPlace(cursor);
 		
 		return scoreObject;
+	}
+	
+	public ArrayList<Place> getAllPlaces(){
+		ArrayList<Place> places = new ArrayList<Place>();
+		
+		Cursor cursor = database.query(
+				PlacesSQLiteHelper.TABLE_PLACES, allColumns, 
+				null, null, null, null, PlacesSQLiteHelper.COLUMN_SCORE + " DESC");
+		cursor.moveToFirst();
+		while(!cursor.isAfterLast()){
+			Place place = cursorToPlace(cursor);
+			places.add(place);
+			cursor.moveToNext();
+		}
+		cursor.close();
+		
+		return places;
+	}
+	
+	public void deleteAll(){
+		database.delete(PlacesSQLiteHelper.TABLE_PLACES, null, null);
 	}
 	
 	private Place cursorToPlace(Cursor cursor){
@@ -75,6 +100,9 @@ public class PlacesDataSource {
 		location.setType("Point");
 		
 		place.setLocation(location);
+		
+		place.setDescription(cursor.getString(6));
+		place.setCategory(cursor.getString(7));
 		return place;
 	}
 	

@@ -13,6 +13,8 @@ public class PlacesSQLiteHelper extends SQLiteOpenHelper {
 	public static final String COLUMN_REMOTE_ID = "_id";
 	public static final String COLUMN_LATITUDE = "latitude";
 	public static final String COLUMN_LONGITUDE = "longitude";
+	public static final String COLUMN_DESCRIPTION = "description";
+	public static final String COLUMN_CATEGORY = "category";
 	
 	private static final String DATABASE_NAME = "places.db";
 	private static final int DATABASE_VERSION = 1;
@@ -24,6 +26,8 @@ public class PlacesSQLiteHelper extends SQLiteOpenHelper {
 			COLUMN_REMOTE_ID + " TEXT NOT NULL," +
 			COLUMN_LATITUDE + " FLOAT NOT NULL," +
 			COLUMN_LONGITUDE + " FLOAT NOT NULL" +
+			COLUMN_DESCRIPTION + "TEXT NOT NULL" +
+			COLUMN_CATEGORY + "TEXT NOT NULL" + 
 			");";
 	
 	public PlacesSQLiteHelper(Context context){

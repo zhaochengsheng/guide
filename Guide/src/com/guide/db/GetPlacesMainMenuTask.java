@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.http.HttpEntity;
@@ -29,24 +30,27 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
+import com.guide.LaunchMainMenuActivity;
 import com.guide.R;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
 
-public class GetPlacesTask extends AsyncTask<String, Integer, Boolean> {
+public class GetPlacesMainMenuTask extends AsyncTask<String, Integer, Boolean> {
 
 	private static final String DEBUG_TAG = "GuideDebug";
 	
 	List<Place> places;
 	Context context;
-	GoogleMap mMap; 
+	GoogleMap mMap;
+	LaunchMainMenuActivity activity;
 	
-	public GetPlacesTask(Context context, GoogleMap mMap) {
+	public GetPlacesMainMenuTask(Context context, LaunchMainMenuActivity a) {
 		this.context = context;
-		this.mMap = mMap;
+		this.activity = a;
 	}
 	
 	@Override
@@ -55,31 +59,8 @@ public class GetPlacesTask extends AsyncTask<String, Integer, Boolean> {
 		
 		if(result == true && places != null){
 
-			for(int i=0; i < places.size(); i++){
-				float longitude = places.get(i).getLocation().getCoordinates().get(0);
-				float latitude = places.get(i).getLocation().getCoordinates().get(1);
+			activity.addScores(places);
 				
-				int marker = R.drawable.ic_flecharestaurante;
-				if (places.get(i).getCategory().equals("restaurant")){
-					marker = R.drawable.ic_flecharestaurante;
-				}else if(places.get(i).getCategory().equals("bar")){
-					marker = R.drawable.ic_flecharestaurante;
-				}else if(places.get(i).getCategory().equals("pharmacy")){
-						marker = R.drawable.ic_flechafarmacia;
-				}else if(places.get(i).getCategory().equals("bank")){
-						marker = R.drawable.ic_flechabanco;
-				}else if(places.get(i).getCategory().equals("grocery_or_supermarket")){
-						marker = R.drawable.ic_flechasupermercado;
-				}else if(places.get(i).getCategory().equals("clothing_store")){
-						marker = R.drawable.ic_flecharopa;
-				}else if(places.get(i).getCategory().equals("movie_theater")){
-						marker = R.drawable.ic_flechacine;
-				}
-				mMap.addMarker(new MarkerOptions()
-		        .position(new LatLng(latitude, longitude))
-		        .title(places.get(i).getName())
-		        .icon(BitmapDescriptorFactory.fromResource(marker)));
-			}
 			/*
 			CharSequence text = places.get(0).getName();
 			int duration = Toast.LENGTH_SHORT;
@@ -87,6 +68,7 @@ public class GetPlacesTask extends AsyncTask<String, Integer, Boolean> {
 			toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
 			toast.show();
 			*/
+			
 		}
 		else{
 			CharSequence text = "Error retrieving places from server.";
@@ -131,8 +113,8 @@ public class GetPlacesTask extends AsyncTask<String, Integer, Boolean> {
 				new HttpGet(hostUrl + "/places/near?" + URLEncodedUtils.format(pairs, "utf-8"));
 		try {
 			HttpResponse response = client.execute(request);
-			//Log.d(DEBUG_TAG, String.valueOf(response.getStatusLine().getStatusCode()));
-			//Log.d(DEBUG_TAG, hostUrl + "/places/near?" + URLEncodedUtils.format(pairs, "utf-8"));
+			Log.d(DEBUG_TAG, String.valueOf(response.getStatusLine().getStatusCode()));
+			Log.d(DEBUG_TAG, hostUrl + "/places/near?" + URLEncodedUtils.format(pairs, "utf-8"));
 			if(response.getStatusLine().getStatusCode() != 200){
 				return false;
 			}
@@ -147,11 +129,12 @@ public class GetPlacesTask extends AsyncTask<String, Integer, Boolean> {
 				}
 				stream.close();
 				String responseString = sb.toString();
-				//Log.d(DEBUG_TAG, responseString);
+				Log.d(DEBUG_TAG, responseString);
 				GsonBuilder builder = new GsonBuilder();
 				Gson gson = builder.create();
 				Type type = new TypeToken<List<Place>>(){}.getType();
 				places = gson.fromJson(responseString, type);
+				Log.d(DEBUG_TAG, "ENTRA ALLI");
 			}
 			
 		} catch (UnsupportedEncodingException e) {

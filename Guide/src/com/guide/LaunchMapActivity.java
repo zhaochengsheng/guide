@@ -5,9 +5,7 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.*;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.maps.CameraUpdate;
@@ -41,7 +39,7 @@ public class LaunchMapActivity extends Fragment implements
 	private static View view;
 	private int zoom = 16;
 	private static FragmentActivity activity;
-	private static Location mCurrentLocation;
+	public static Location mCurrentLocation;
 	private static Location locationShown;
 
 	public LaunchMapActivity() {
