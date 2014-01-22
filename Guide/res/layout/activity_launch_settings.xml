@@ -1,21 +1,71 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+	<PreferenceCategory
+        android:title="@string/map_and_places_preferences">
+	    
+        <ListPreference
+           android:key="pref_max_distance"
+           android:title="@string/max_distance"
+           android:summary="@string/max_distance_description"
+           android:entries="@array/menu_max_distance"
+           android:entryValues="@array/menu_max_distance_values"
+           android:dialogTitle="@string/max_distance"
+           android:defaultValue="1000"
+        />
+        
+        <ListPreference
+           android:key="pref_max_places"
+           android:title="@string/max_places"
+           android:summary="@string/max_places_description"
+           android:entries="@array/menu_max_places"
+           android:entryValues="@array/menu_max_places_values"
+           android:dialogTitle="@string/max_places"
+           android:defaultValue="50"
+        />
+        
+        <ListPreference
+           android:key="pref_max_products"
+           android:title="@string/max_products"
+           android:summary="@string/max_places_description"
+           android:entries="@array/menu_max_products"
+           android:entryValues="@array/menu_max_products_values"
+           android:dialogTitle="@string/max_products"
+           android:defaultValue="10"
+        />
+
+
+	</PreferenceCategory>
+    
     <PreferenceCategory 
-        android:title="@string/app_name"
-        android:key="pref_key_storage_settings">
+        android:title="@string/categories"
+        android:summary="@string/categories_description">
         <CheckBoxPreference
-            android:key="pref_key_auto_delete"
-            android:summary="@string/app_name"
-            android:title="@string/app_name"
-            android:defaultValue="false" />
-        <Preference 
-            android:key="pref_key_sms_delete_limit"
-            android:dependency="pref_key_auto_delete"
-            android:summary="@string/app_name"
-            android:title="@string/app_name" />
-        <Preference 
-            android:key="pref_key_mms_delete_limit"
-            android:dependency="pref_key_auto_delete"
-            android:summary="@string/app_name"
-            android:title="@string/app_name" />
+            android:key="pref_category_restaurant"
+            android:title="@string/category_restaurant"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="pref_category_bar"
+            android:title="@string/category_bar"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="pref_category_pharmacy"
+            android:title="@string/category_pharmacy"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="pref_category_bank"
+            android:title="@string/category_bank"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="pref_category_movie_theater"
+            android:title="@string/category_movie_theater"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="pref_clothing_store"
+            android:title="@string/category_clothing_store"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="pref_grocery_or_supermarket"
+            android:title="@string/category_grocery_or_supermarket"
+            android:defaultValue="true" />
     </PreferenceCategory>
+    
 </PreferenceScreen>

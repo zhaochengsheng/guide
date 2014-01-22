@@ -26,6 +26,7 @@ public class MainActivity extends FragmentActivity {
 
 	private Fragment mapfragment;
 	private Fragment settingsFragment;
+	private Fragment mainMenuFragment;
 
 	FragmentManager fragmentManager = getSupportFragmentManager();
 
@@ -76,14 +77,11 @@ public class MainActivity extends FragmentActivity {
 		 * View, therefore it should be shown as default while settings should
 		 * be hidden by default
 		 */
-		if (findViewById(R.id.fragment_container) != null) {
-			if (savedInstanceState != null) {
-				return;
-			}
-			startMapActivity();
+		if (savedInstanceState == null) {
 			startSettingsActivity();
+			startMapActivity();
+			startMainMenuActivity();
 		}
-
 	}
 
 	@Override
@@ -128,10 +126,11 @@ public class MainActivity extends FragmentActivity {
 		 */
 		if (position == 0) {
 			// TODO Call Menú principal Fragment
+			onFragmentChange("mainmenu");
 		} else if (position == 1) {
 			onFragmentChange("map");
 			LaunchMapActivity.alterMap();
-		} else if (position == 3) {
+		} else if (position == 2) {
 			// Create View for SettingsMenu or Other
 			onFragmentChange("settings");
 		}
@@ -153,23 +152,48 @@ public class MainActivity extends FragmentActivity {
 	 */
 	public void onFragmentChange(String name) {
 		if (name == "settings") {
-			if (settingsFragment.isHidden() == true) {
-			FragmentTransaction transaction = fragmentManager
-					.beginTransaction();
-			transaction.hide(mapfragment);
-			transaction.show(settingsFragment);
-			transaction.addToBackStack(null);
-			transaction.commit();
+			if(settingsFragment == null){
+				startSettingsActivity();
+				startMainMenuActivity();
+				startMapActivity();
+			}
+			if ( settingsFragment.isHidden() == true) {
+				FragmentTransaction transaction = fragmentManager
+						.beginTransaction();
+				transaction.hide(mapfragment);
+				transaction.hide(mainMenuFragment);
+				transaction.show(settingsFragment);
+				transaction.addToBackStack(null);
+				transaction.commit();
 			}
 		} else if (name == "map") {
+			if(mapfragment == null){
+				startSettingsActivity();
+				startMainMenuActivity();
+				startMapActivity();
+			}
 			if (mapfragment.isHidden() == true) {
 				FragmentTransaction transaction = fragmentManager
 						.beginTransaction();
 				transaction.hide(settingsFragment);
+				transaction.hide(mainMenuFragment);
 				transaction.show(mapfragment);
 				transaction.addToBackStack(null);
 				transaction.commit();
 			}
+		} else if(name == "mainmenu"){
+			if(mainMenuFragment == null){
+				startSettingsActivity();
+				startMainMenuActivity();
+				startMapActivity();
+			}
+			FragmentTransaction transaction = fragmentManager
+					.beginTransaction();
+			transaction.hide(settingsFragment);
+			transaction.hide(mapfragment);
+			transaction.show(mainMenuFragment);
+			transaction.addToBackStack(null);
+			transaction.commit();
 		}
 	}
 
@@ -180,7 +204,7 @@ public class MainActivity extends FragmentActivity {
 		settingsFragment = new LaunchSettingsActivity();
 		settingsFragment.getFragmentManager();
 		FragmentTransaction transaction = fragmentManager.beginTransaction();
-		transaction.add(R.id.fragment_container, settingsFragment);
+		transaction.replace(R.id.fragment_container_preferences, settingsFragment);
 		transaction.hide(settingsFragment);
 		transaction.commit();
 	}
@@ -192,7 +216,21 @@ public class MainActivity extends FragmentActivity {
 		mapfragment = new LaunchMapActivity();
 		mapfragment.getFragmentManager();
 		FragmentTransaction transaction = fragmentManager.beginTransaction();
-		transaction.add(R.id.fragment_container, mapfragment);
+		transaction.replace(R.id.fragment_container_map, mapfragment);
+		transaction.hide(settingsFragment);
+		// if being added to the Backstack it will revert the fragment_container
+		// and the view is empty.
+		transaction.commit();
+	}
+	
+	/*
+	 * Initializes the MainMenu Fragment
+	 */
+	public void startMainMenuActivity(){
+		mainMenuFragment = new LaunchMainMenuActivity();
+		mainMenuFragment.getFragmentManager();
+		FragmentTransaction transaction = fragmentManager.beginTransaction();
+		transaction.replace(R.id.fragment_container_main_menu, mainMenuFragment);
 		// if being added to the Backstack it will revert the fragment_container
 		// and the view is empty.
 		transaction.commit();
