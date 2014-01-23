@@ -7,9 +7,10 @@
     <string name="drawer_close">Close Menu</string>
 
     <string-array name="menu">
-        <item>Menú Principal</item>
-        <item>Mapa</item>
-        <item>Ajustes</item>
+        <item>Places</item>
+        <item>Products</item>
+        <item>Map</item>
+        <item>Settings</item>
     </string-array>
 
     <string name="title_activity_google_maps_">GoogleMaps_Activity</string>
@@ -26,6 +27,18 @@
     <string name="category_movie_theater">Movie theater</string>
     <string name="category_clothing_store">Clothing Store</string>
     <string name="category_grocery_or_supermarket">Supermarket</string>
+    
+    <!-- Adapter de lugares -->
+    <string name="products_text_categories_row">Number of products:</string>
+    <string name="rating_text_categories_row">Rating:</string>
+    <string name="category_text_categories_row">Category:</string>
+    <string name="description_text_categories_row">Descripcion:</string>
+    
+    <!-- Adapter de ofertas -->
+    <string name="title_place_text_products_row">Place:</string>
+    <string name="description_text_products_row">Description:</string>
+    <string name="price_text_products_row">Price:</string>
+    <string name="price_currency_products_row"> $</string>
 
     <!-- Preferencias del mapa y sitios-->
     <string name="map_and_places_preferences">Map and Places Preferences</string>

@@ -3,6 +3,7 @@ package com.guide.db;
 import java.util.ArrayList;
 
 import com.guide.R;
+import com.guide.db.Place.Product;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,7 +13,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class PlaceAdapter extends BaseAdapter {
+public class ProductAdapter extends BaseAdapter {
 
 	private Context context;
 	
@@ -26,16 +27,15 @@ public class PlaceAdapter extends BaseAdapter {
 	{
 		TextView title;
 		TextView description;
-		TextView category;
-		TextView rating;
-		TextView number_of_products;
+		TextView title_place;
+		TextView price;
 		ImageView image;
 	}
  
-	private ArrayList<Place> data;
+	private ArrayList<Product> data;
 	private LayoutInflater inflater = null;
 	
-	public PlaceAdapter(Context c, ArrayList<Place> data) {
+	public ProductAdapter(Context c, ArrayList<Product> data) {
 		this.data = data;
 		inflater = LayoutInflater.from(c);
 		context = c;
@@ -62,16 +62,15 @@ public class PlaceAdapter extends BaseAdapter {
  
 		if (convertView == null)
 		{
-			convertView = inflater.inflate(R.layout.activity_main_menu_places_row, null);
+			convertView = inflater.inflate(R.layout.activity_products_places_row, null);
  
 			holder = new ViewHolder();
  
-			holder.image = (ImageView) convertView.findViewById(R.id.image_categories_row);
-			holder.title = (TextView) convertView.findViewById(R.id.title_categories_row);
-			holder.description = (TextView) convertView.findViewById(R.id.description_categories_row);
-			holder.category = (TextView) convertView.findViewById(R.id.category_categories_row);
-			holder.rating = (TextView) convertView.findViewById(R.id.rating_categories_row);
-			holder.number_of_products = (TextView) convertView.findViewById(R.id.products_categories_row);
+			holder.image = (ImageView) convertView.findViewById(R.id.image_products_row);
+			holder.title = (TextView) convertView.findViewById(R.id.title_products_row);
+			holder.description = (TextView) convertView.findViewById(R.id.description_products_row);
+			holder.price = (TextView) convertView.findViewById(R.id.price_products_row);
+			holder.title_place = (TextView) convertView.findViewById(R.id.title_place_products_row);
 			
 			convertView.setTag(holder);
  
@@ -97,18 +96,11 @@ public class PlaceAdapter extends BaseAdapter {
 				imageResource = images[5];
 		}
 		
-		if(data.get(position).getProducts() != null){
-			holder.number_of_products.setText(String.valueOf(data.get(position).getProducts().size()));
-		}
-		else{
-			holder.number_of_products.setText("0");
-		}
-				
 		holder.image.setImageResource(imageResource);
 		holder.title.setText(data.get(position).getName());
-		holder.description.setText( data.get(position).getDescription());
-		holder.rating.setText(String.valueOf(data.get(position).getRating()));
-		holder.category.setText(data.get(position).getCategory());
+		holder.description.setText(data.get(position).getDescription());
+		holder.price.setText(String.valueOf(data.get(position).getPrice()));
+		holder.title_place.setText(data.get(position).getName_place());
 		
 		return convertView;
 	}

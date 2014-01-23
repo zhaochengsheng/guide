@@ -9,8 +9,9 @@ import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.guide.db.GetPlacesMainMenuTask;
+import com.guide.db.GetPlacesProductsTask;
 import com.guide.db.Place;
-import com.guide.db.PlaceAdapter;
+import com.guide.db.Place.Product;
 import com.guide.db.ProductAdapter;
 
 import android.app.Activity;
@@ -22,11 +23,11 @@ import android.view.ViewGroup;
 import android.location.Location;
 import android.os.Bundle;
 
-public class LaunchMainMenuActivity extends ListFragment implements GooglePlayServicesClient.ConnectionCallbacks,
+public class LaunchProductsActivity extends ListFragment implements GooglePlayServicesClient.ConnectionCallbacks,
 GooglePlayServicesClient.OnConnectionFailedListener, LocationListener{
 	
 	
-	private ArrayList<Place> places; 
+	private ArrayList<Product> products; 
 	
 	Location currentLocation;
 	
@@ -44,12 +45,12 @@ GooglePlayServicesClient.OnConnectionFailedListener, LocationListener{
 		lc = new LocationClient(this.getActivity().getApplicationContext(),
 				this, this);
 		
-		places = new ArrayList<Place>();
+		products = new ArrayList<Product>();
 		   
-	    setListAdapter(new PlaceAdapter(getActivity(), places));
+	    setListAdapter(new ProductAdapter(getActivity(), products));
 		
 		if(LaunchMapActivity.mCurrentLocation != null){
-			GetPlacesMainMenuTask getScoresTask = new GetPlacesMainMenuTask(getActivity(), this);
+			GetPlacesProductsTask getScoresTask = new GetPlacesProductsTask(getActivity(), this);
 			Location location = LaunchMapActivity.mCurrentLocation;
 			String latitude = String.valueOf(location.getLatitude());
 		    String longitude = String.valueOf(location.getLongitude());
@@ -71,10 +72,10 @@ GooglePlayServicesClient.OnConnectionFailedListener, LocationListener{
 		super.onAttach(activity);
 	}
 	
-	public void addPlaces(List<Place> list){
-		 places.clear();
-		 places.addAll(list);
-		 final PlaceAdapter adapter = (PlaceAdapter) getListAdapter();
+	public void addProducts(List<Product> list){
+		 products.clear();
+		 products.addAll(list);
+		 final ProductAdapter adapter = (ProductAdapter) getListAdapter();
 		 adapter.notifyDataSetChanged();
 		 //Log.d(DEBUG_TAG, "ENTRA ALLI");
 		 //Log.d(DEBUG_TAG, list.get(0).getCategory());
@@ -106,7 +107,7 @@ GooglePlayServicesClient.OnConnectionFailedListener, LocationListener{
 		// TODO Auto-generated method stub
 		currentLocation = location;
 	    if (currentLocation != null){
-	    	GetPlacesMainMenuTask getScoresTask = new GetPlacesMainMenuTask(getActivity(), this);
+	    	GetPlacesProductsTask getScoresTask = new GetPlacesProductsTask(getActivity(), this);
 	        String latitude = String.valueOf(currentLocation.getLatitude());
 	        String longitude = String.valueOf(currentLocation.getLongitude());
 	        String maxDistance = "1000";
@@ -128,7 +129,7 @@ GooglePlayServicesClient.OnConnectionFailedListener, LocationListener{
 	    // Global variable to hold the current location
 	    currentLocation = lc.getLastLocation();
 	    if (currentLocation != null){
-	    	GetPlacesMainMenuTask getScoresTask = new GetPlacesMainMenuTask(getActivity(), this);
+	    	GetPlacesProductsTask getScoresTask = new GetPlacesProductsTask(getActivity(), this);
 	        String latitude = String.valueOf(currentLocation.getLatitude());
 	        String longitude = String.valueOf(currentLocation.getLongitude());
 	        String maxDistance = "1000";

@@ -27,7 +27,14 @@ public class MainActivity extends FragmentActivity {
 	private Fragment mapfragment;
 	private Fragment settingsFragment;
 	private Fragment mainMenuFragment;
-
+	private Fragment productsFragment;
+	
+	private String PREVIOUS_FRAGMENT = "PREVIOUS_FRAGMENT";
+	private final int mapF = 0;
+	private final int settingsF = 1;
+	private final int mainF = 2;
+	private final int productsF = 3;
+	
 	FragmentManager fragmentManager = getSupportFragmentManager();
 
 	@Override
@@ -77,9 +84,25 @@ public class MainActivity extends FragmentActivity {
 		 * View, therefore it should be shown as default while settings should
 		 * be hidden by default
 		 */
-		if (savedInstanceState == null) {
-			startSettingsActivity();
-			startMapActivity();
+		
+		if (savedInstanceState != null) {
+			int previous_instance = savedInstanceState.getInt(PREVIOUS_FRAGMENT);
+			switch(previous_instance){
+				case mapF:
+					startMapActivity();
+					break;
+				case mainF:
+					startMainMenuActivity();
+					break;
+				case settingsF:
+					startSettingsActivity();
+					break;
+				case productsF:
+					startProductsActivity();
+					break;
+			}
+		}
+		else{
 			startMainMenuActivity();
 		}
 	}
@@ -127,11 +150,14 @@ public class MainActivity extends FragmentActivity {
 		if (position == 0) {
 			// TODO Call Menú principal Fragment
 			onFragmentChange("mainmenu");
-		} else if (position == 1) {
+		}else if (position == 1) {
+			// Create View for Products
+			onFragmentChange("products");
+		}else if (position == 2) {
 			onFragmentChange("map");
 			LaunchMapActivity.alterMap();
-		} else if (position == 2) {
-			// Create View for SettingsMenu or Other
+		} else if (position == 3) {
+			// Create View for SettingsMenu
 			onFragmentChange("settings");
 		}
 
@@ -151,49 +177,26 @@ public class MainActivity extends FragmentActivity {
 	 * Switch to SettingsFragment and Back
 	 */
 	public void onFragmentChange(String name) {
-		if (name == "settings") {
-			if(settingsFragment == null){
-				startSettingsActivity();
-				startMainMenuActivity();
-				startMapActivity();
-			}
-			if ( settingsFragment.isHidden() == true) {
-				FragmentTransaction transaction = fragmentManager
-						.beginTransaction();
-				transaction.hide(mapfragment);
-				transaction.hide(mainMenuFragment);
-				transaction.show(settingsFragment);
-				transaction.addToBackStack(null);
-				transaction.commit();
-			}
+		if (name == "settings" && settingsFragment == null) {
+			stopMapActivity();
+			stopMainMenuActivity();
+			stopProductsActivity();
+			startSettingsActivity();
 		} else if (name == "map") {
-			if(mapfragment == null){
-				startSettingsActivity();
-				startMainMenuActivity();
-				startMapActivity();
-			}
-			if (mapfragment.isHidden() == true) {
-				FragmentTransaction transaction = fragmentManager
-						.beginTransaction();
-				transaction.hide(settingsFragment);
-				transaction.hide(mainMenuFragment);
-				transaction.show(mapfragment);
-				transaction.addToBackStack(null);
-				transaction.commit();
-			}
+			stopSettingsActivity();
+			stopMainMenuActivity();
+			stopProductsActivity();
+			startMapActivity();
 		} else if(name == "mainmenu"){
-			if(mainMenuFragment == null){
-				startSettingsActivity();
-				startMainMenuActivity();
-				startMapActivity();
-			}
-			FragmentTransaction transaction = fragmentManager
-					.beginTransaction();
-			transaction.hide(settingsFragment);
-			transaction.hide(mapfragment);
-			transaction.show(mainMenuFragment);
-			transaction.addToBackStack(null);
-			transaction.commit();
+			stopSettingsActivity();
+			stopMapActivity();
+			stopProductsActivity();
+			startMainMenuActivity();
+		} else if(name == "products"){
+			stopSettingsActivity();
+			stopMapActivity();
+			stopMainMenuActivity();
+			startProductsActivity();
 		}
 	}
 
@@ -202,10 +205,8 @@ public class MainActivity extends FragmentActivity {
 	 */
 	public void startSettingsActivity() {
 		settingsFragment = new LaunchSettingsActivity();
-		settingsFragment.getFragmentManager();
 		FragmentTransaction transaction = fragmentManager.beginTransaction();
 		transaction.replace(R.id.fragment_container_preferences, settingsFragment);
-		transaction.hide(settingsFragment);
 		transaction.commit();
 	}
 
@@ -214,10 +215,8 @@ public class MainActivity extends FragmentActivity {
 	 */
 	public void startMapActivity() {
 		mapfragment = new LaunchMapActivity();
-		mapfragment.getFragmentManager();
 		FragmentTransaction transaction = fragmentManager.beginTransaction();
 		transaction.replace(R.id.fragment_container_map, mapfragment);
-		transaction.hide(mapfragment);
 		// if being added to the Backstack it will revert the fragment_container
 		// and the view is empty.
 		transaction.commit();
@@ -228,12 +227,86 @@ public class MainActivity extends FragmentActivity {
 	 */
 	public void startMainMenuActivity(){
 		mainMenuFragment = new LaunchMainMenuActivity();
-		mainMenuFragment.getFragmentManager();
 		FragmentTransaction transaction = fragmentManager.beginTransaction();
 		transaction.replace(R.id.fragment_container_main_menu, mainMenuFragment);
 		// if being added to the Backstack it will revert the fragment_container
 		// and the view is empty.
 		transaction.commit();
 	}
+	
+	/*
+	 * Initializes the Products Fragment
+	 */
+	public void startProductsActivity(){
+		productsFragment = new LaunchProductsActivity();
+		FragmentTransaction transaction = fragmentManager.beginTransaction();
+		transaction.replace(R.id.fragment_container_products, productsFragment);
+		// if being added to the Backstack it will revert the fragment_container
+		// and the view is empty.
+		transaction.commit();
+	}
+	
+	public void stopMapActivity(){
+		if(mapfragment != null){
+			FragmentTransaction transaction = fragmentManager.beginTransaction();
+			transaction.remove(mapfragment);
+			transaction.commit();
+			mapfragment = null;
+		}
+	}
+	
+	public void stopMainMenuActivity(){
+		if(mainMenuFragment != null){
+			FragmentTransaction transaction = fragmentManager.beginTransaction();
+			transaction.remove(mainMenuFragment);
+			transaction.commit();
+			mainMenuFragment = null;
+		}
+	}
+	
+	public void stopSettingsActivity(){
+		if(settingsFragment != null){
+			FragmentTransaction transaction = fragmentManager.beginTransaction();
+			transaction.remove(settingsFragment);
+			transaction.commit();
+			settingsFragment = null;
+		}
+	}
+	
+	public void stopProductsActivity(){
+		if(productsFragment != null){
+			FragmentTransaction transaction = fragmentManager.beginTransaction();
+			transaction.remove(productsFragment);
+			transaction.commit();
+			productsFragment = null;
+		}
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		// TODO Auto-generated method stub
+
+		if(mapfragment != null){
+			outState.putInt(PREVIOUS_FRAGMENT, mapF);
+		}else if(mainMenuFragment != null){
+			outState.putInt(PREVIOUS_FRAGMENT, mainF);
+		}else if(productsFragment != null){
+			outState.putInt(PREVIOUS_FRAGMENT, productsF);
+		}else{
+			outState.putInt(PREVIOUS_FRAGMENT, settingsF);
+		}	
+		
+		stopMainMenuActivity();
+		stopMapActivity();
+		stopSettingsActivity();
+		stopProductsActivity();
+		
+		
+		super.onSaveInstanceState(outState);
+	}
+
+
+	
+	
 
 }

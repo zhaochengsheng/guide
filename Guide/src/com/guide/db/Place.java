@@ -90,6 +90,21 @@ public class Place implements Comparable<Place>{
 		private String name;
 		private String description;
 		private float price;
+		private String category;
+		private String name_place;
+		
+		public String getCategory() {
+			return category;
+		}
+		public void setCategory(String category) {
+			this.category = category;
+		}
+		public String getName_place() {
+			return name_place;
+		}
+		public void setName_place(String name_place) {
+			this.name_place = name_place;
+		}
 		public String getName() {
 			return name;
 		}

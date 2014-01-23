@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Guide</string>
+    <string name="action_settings">Ajuestes</string>
+    <string name="drawer_open">Abrir Menu</string>
+    <string name="drawer_close">Cerrar Menu</string>
+
+    <string-array name="menu">
+        <item>Lugares</item>
+        <item>Ofertas</item>
+        <item>Mapa</item>
+        <item>Ajustes</item>
+    </string-array>
+
+    <string name="title_activity_google_maps_">GoogleMaps_Activity</string>
+    <string name="title_activity_launch_map">LaunchMapActivity</string>
+    <string name="title_activity_launch_settings">LaunchSettingsActivity</string>
+    
+    <!-- Categories -->
+    <string name="categories">Categorías</string>
+    <string name="categories_description">Elige las categorías que quieres que se muestren</string>
+    <string name="category_restaurant">Restaurante</string>
+    <string name="category_bar">Bar</string>
+    <string name="category_pharmacy">Farmacia</string>
+    <string name="category_bank">Banco</string>
+    <string name="category_movie_theater">Cine y Teatro</string>
+    <string name="category_clothing_store">Tienda de Ropa</string>
+    <string name="category_grocery_or_supermarket">Supermercado</string>
+    
+    <!-- Adapter de lugares -->
+    <string name="products_text_categories_row">Número de productos:</string>
+    <string name="rating_text_categories_row">Puntuación:</string>
+    <string name="category_text_categories_row">Categoría:</string>
+    <string name="description_text_categories_row">Descripción:</string>
+    
+    <!-- Adapter de ofertas -->
+    <string name="title_place_text_products_row">Lugar:</string>
+    <string name="description_text_products_row">Descripción:</string>
+    <string name="price_text_products_row">Precio:</string>
+    <string name="price_currency_products_row"> €</string>
+
+    <!-- Preferencias del mapa y sitios-->
+    <string name="map_and_places_preferences">Preferencias de Mapa y Lugares</string>
+    
+    <string name="max_distance">Máxima distancia</string>
+    <string name="max_distance_description">Máxima distancia a la que quieres ver los lugares</string>
+    
+    <string-array name="menu_max_distance">
+        <item>Muy cerca</item>
+        <item>Cerca</item>
+        <item>Media distancia</item>
+        <item>Lejos</item>
+    </string-array>
+    
+    <string-array name="menu_max_distance_values">
+        <item>500</item>
+        <item>1000</item>
+        <item>2000</item>
+        <item>5000</item>
+    </string-array>
+    
+    <string name="max_places">Maxímo número de lugares</string>
+    <string name="max_places_description">Máximo número de lugares que quieres que se muestren</string>
+    
+    <string-array name="menu_max_places">
+        <item>Pocos</item>
+        <item>Más de unos pocos</item>
+        <item>Bastantes</item>
+        <item>Muchos</item>
+    </string-array>
+    
+    <string-array name="menu_max_places_values">
+        <item>20</item>
+        <item>50</item>
+        <item>100</item>
+        <item>200</item>
+    </string-array>
+    
+    <string name="max_products">Máximo número de productos por sitio</string>
+    <string name="max_products_description">Máximo número de productos que tú quieres ver en un lugar</string>
+    
+    <string-array name="menu_max_products">
+		<item>Pocos</item>
+        <item>Más de unos pocosw</item>
+        <item>Bastantes</item>
+        <item>Muchos</item>
+    </string-array>
+    
+    <string-array name="menu_max_products_values">
+        <item>5</item>
+        <item>10</item>
+        <item>15</item>
+        <item>20</item>
+    </string-array>
+</resources>

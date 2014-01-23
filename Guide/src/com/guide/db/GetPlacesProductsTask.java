@@ -31,7 +31,10 @@ import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
 import com.guide.LaunchMainMenuActivity;
+import com.guide.LaunchProductsActivity;
 import com.guide.R;
+import com.guide.db.Place.Product;
+
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v4.app.ListFragment;
@@ -39,16 +42,16 @@ import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
 
-public class GetPlacesMainMenuTask extends AsyncTask<String, Integer, Boolean> {
+public class GetPlacesProductsTask extends AsyncTask<String, Integer, Boolean> {
 
 	private static final String DEBUG_TAG = "GuideDebug";
 	
 	List<Place> places;
 	Context context;
 	GoogleMap mMap;
-	LaunchMainMenuActivity activity;
+	LaunchProductsActivity activity;
 	
-	public GetPlacesMainMenuTask(Context context, LaunchMainMenuActivity a) {
+	public GetPlacesProductsTask(Context context, LaunchProductsActivity a) {
 		this.context = context;
 		this.activity = a;
 	}
@@ -59,7 +62,19 @@ public class GetPlacesMainMenuTask extends AsyncTask<String, Integer, Boolean> {
 		
 		if(result == true && places != null){
 
-			activity.addPlaces(places);
+			ArrayList<Product> products = new ArrayList<Product>();
+			
+			for(int i=0; i < places.size(); i++){
+				if(places.get(i).getProducts() != null){
+					for(int j = 0; j < places.get(i).getProducts().size(); j++){
+						places.get(i).getProducts().get(j).setCategory(places.get(i).getCategory());
+						places.get(i).getProducts().get(j).setName_place(places.get(i).getName());
+					}
+					products.addAll(places.get(i).getProducts());
+				}
+			}
+			
+			activity.addProducts(products);
 				
 			/*
 			CharSequence text = places.get(0).getName();
